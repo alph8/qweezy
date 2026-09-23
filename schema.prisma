@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------- Auth (NextAuth email magic-link) ----------
+// Note: this model is literally named "User" because @auth/prisma-adapter
+// expects a model of that name. Everywhere else in the app we call this
+// concept a "Player".
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------- App domain ----------
+
+enum Team {
+  A
+  B
+}
+
+enum MatchStatus {
+  PENDING_SPREAD // DRAFT: only the admin can see/edit/delete it; not yet published for betting
+  OPEN // published: spread locked in, betting open
+  LOCKED // betting closed, waiting on result
+  COMPLETED // result entered, bets settled
+}
+
+enum BetOutcome {
+  PENDING
+  WIN
+  LOSS
+  PUSH
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String // real name or nickname, player's choice
+  isAdmin       Boolean   @default(false)
+  balance       Int       @default(1000)
+  createdAt     DateTime  @default(now())
+  emailVerified DateTime?
+
+  // Tennis ratings (all optional; set by the admin's roster import).
+  // individualRating is the USTA/NTRP rating and is shown next to the
+  // player's name for everyone. The rest are admin-only and never sent to
+  // other users: doublesRating is Eric's projection, teamNumber/teamRank
+  // are the spreadsheet's team # and proposed 1-30 ranking.
+  individualRating Float?
+  doublesRating    Float?
+  teamNumber       Int?
+  teamRank         Int?
+
+  accounts      Account[]
+  sessions      Session[]
+  matchEntries  MatchPlayer[]
+  bets          Bet[]
+  matchesLogged Match[]       @relation("MatchCreatedBy")
+}
+
+// join table: which players are on which team for a given match
+model MatchPlayer {
+  id       String  @id @default(cuid())
+  matchId  String
+  playerId String
+  team     Team
+
+  match  Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player User  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, playerId])
+}
+
+model Match {
+  id          String      @id @default(cuid())
+  status      MatchStatus @default(PENDING_SPREAD)
+  scheduledAt DateTime?
+  createdById String
+  createdBy   User        @relation("MatchCreatedBy", fields: [createdById], references: [id])
+  createdAt   DateTime    @default(now())
+
+  // The spread is always expressed relative to Team A.
+  // e.g. lineForTeamA = -5 means Team A is favored by 5 games.
+  // lineForTeamA = +3 means Team A is getting 3 games.
+  lineForTeamA Float?
+
+  // Result, entered once the match is played
+  sets   Set[]
+  margin Float? // final game-differential margin for Team A, after tiebreak rules applied
+
+  players MatchPlayer[]
+  bets    Bet[]
+}
+
+model Set {
+  id              String  @id @default(cuid())
+  matchId         String
+  order           Int // 1, 2, 3
+  teamAGames      Int
+  teamBGames      Int
+  isTiebreak      Boolean @default(false) // set decided by a standard tiebreak (e.g. 7-6)
+  isMatchTiebreak Boolean @default(false) // 3rd-set match tiebreak (e.g. first to 10)
+
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, order])
+}
+
+model Bet {
+  id         String     @id @default(cuid())
+  matchId    String
+  playerId   String
+  teamPicked Team
+  amount     Int
+  outcome    BetOutcome @default(PENDING)
+  payout     Int? // net change to balance once settled (can be negative)
+  createdAt  DateTime   @default(now())
+
+  match  Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player User  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, playerId]) // one bet per player per match
+}
+
+// Small key/value store for admin-tunable numbers (e.g. the ratings-to-line
+// curve used to suggest a spread).
+model Setting {
+  key   String @id
+  value Float
+}
