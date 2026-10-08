@@ -7,7 +7,8 @@ import { requireAdmin, withAuthError } from "@/lib/session";
 // taken out of the player's balance when they placed it, so it goes straight
 // back -- and then the match and its bets are deleted. A completed match has
 // already paid out, so it can't be cancelled here.
-export const POST = withAuthError(async (_req: Request, { params }: { params: { id: string } }) => {
+export const POST = withAuthError(async (_req: Request, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
 
   const match = await prisma.match.findUnique({ where: { id: params.id }, include: { bets: true } });

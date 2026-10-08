@@ -3,7 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { requireAdmin, withAuthError } from "@/lib/session";
 
 // Admin-only: manually close betting on a match, e.g. right before it starts.
-export const POST = withAuthError(async (_req: Request, { params }: { params: { id: string } }) => {
+export const POST = withAuthError(async (_req: Request, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
   const existing = await prisma.match.findUnique({ where: { id: params.id } });
   if (!existing) return NextResponse.json({ error: "Match not found" }, { status: 404 });

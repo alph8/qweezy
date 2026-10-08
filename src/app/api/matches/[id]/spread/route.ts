@@ -8,7 +8,8 @@ import { isValidLine } from "@/lib/lines";
 // The line is Team A's perspective and must be a multiple of 0.5 (0 is a
 // pick'em). Once published the line can't change: bets get placed against it,
 // so quietly moving it would change what people already bet on.
-export const POST = withAuthError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const POST = withAuthError(async (req: NextRequest, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
   const { lineForTeamA } = (await req.json()) as { lineForTeamA: number };
 
