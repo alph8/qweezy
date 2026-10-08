@@ -1,0 +1,424 @@
+{
+ "week1": [
+  {
+   "teamA": [
+    "Eric Sellars",
+    "Ryan Crossland"
+   ],
+   "teamB": [
+    "Eric Webber",
+    "Thiru Lakshman"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 1,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 3,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Brian McNamara",
+    "Giulio Pappal"
+   ],
+   "teamB": [
+    "Todd Davis",
+    "Ed Winn"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 2,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 1,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Eric Marquez",
+    "Asad Sawani"
+   ],
+   "teamB": [
+    "Matthew Haralson",
+    "Nik Pai"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 7,
+     "isTiebreak": true,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 4,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Andrew Gallo",
+    "Robert Bastion"
+   ],
+   "teamB": [
+    "Eagle Robinson",
+    "Rickey Hall"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 7,
+     "teamBGames": 6,
+     "isTiebreak": true,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 4,
+     "teamBGames": 6,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Bill Brennan",
+    "Tanner Bond"
+   ],
+   "teamB": [
+    "Brett Birkeland",
+    "Mark McKenzie"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 7,
+     "teamBGames": 5,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Eric Brown",
+    "Kyle Ozaki"
+   ],
+   "teamB": [
+    "Michael Tarsha",
+    "Michael Turner"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 1,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 1,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Tom Carstens",
+    "John McManus"
+   ],
+   "teamB": [
+    "Trey Dolezal",
+    "Brian Pratt"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 3,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 5,
+     "teamBGames": 7,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  }
+ ],
+ "week2": [
+  {
+   "teamA": [
+    "Eric Marquez",
+    "Asad Sawani"
+   ],
+   "teamB": [
+    "Juan Gonzalez",
+    "St.John Dunne"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 3,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 4,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Tim Chapman",
+    "Ricky Doyle"
+   ],
+   "teamB": [
+    "Eddie Lewis",
+    "Todd Preheim"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 2,
+     "teamBGames": 6,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 2,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "John Barton",
+    "Keith Bray"
+   ],
+   "teamB": [
+    "Matthew Haralson",
+    "Nik Pai"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 2,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 3,
+     "teamBGames": 6,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  },
+  {
+   "teamA": [
+    "Brian McNamara",
+    "Giulio Pappal"
+   ],
+   "teamB": [
+    "Bill Brennan",
+    "Tanner Bond"
+   ],
+   "sets": [
+    {
+     "order": 1,
+     "teamAGames": 6,
+     "teamBGames": 2,
+     "isTiebreak": false,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 2,
+     "teamAGames": 6,
+     "teamBGames": 7,
+     "isTiebreak": true,
+     "isMatchTiebreak": false
+    },
+    {
+     "order": 3,
+     "teamAGames": 1,
+     "teamBGames": 0,
+     "isTiebreak": false,
+     "isMatchTiebreak": true
+    }
+   ]
+  }
+ ],
+ "week3_lineup": [
+  {
+   "teamA": [
+    "Brent Turnipseed",
+    "Chris Morris"
+   ],
+   "teamB": [
+    "Brett Birkeland",
+    "Mark McKenzie"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Jay Snodgrass",
+    "Blair Duncan"
+   ],
+   "teamB": [
+    "Josh Kerr",
+    "Ken Leonard"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Tom Carstens",
+    "John McManus"
+   ],
+   "teamB": [
+    "Chris Moose",
+    "Lee Smith"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Eric Webber",
+    "Thiru Lakshman"
+   ],
+   "teamB": [
+    "Trey Dolezal",
+    "Brian Pratt"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Michael Tarsha",
+    "Jeff Anderson"
+   ],
+   "teamB": [
+    "Jeff Albrecht",
+    "Omar Boulden"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Eric Brown",
+    "Kyle Ozaki"
+   ],
+   "teamB": [
+    "Tim Chapman",
+    "Juan Gonzalez"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "John Barton",
+    "Brian Frederick"
+   ],
+   "teamB": [
+    "Eric Marquez",
+    "Asad Sawani"
+   ],
+   "sets": []
+  },
+  {
+   "teamA": [
+    "Jonathan Lass",
+    "Vikram Grover"
+   ],
+   "teamB": [
+    "Eddie Lewis",
+    "Todd Preheim"
+   ],
+   "sets": []
+  }
+ ]
+}

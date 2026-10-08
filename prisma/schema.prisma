@@ -60,6 +60,12 @@ enum MatchStatus {
   COMPLETED // result entered, bets settled
 }
 
+// A match logged purely for the ratings engine never goes through betting
+// (no spread, no bets). A future week's lineup entered ahead of time with
+// no score yet just stays PENDING_SPREAD (the existing draft state) with
+// ratingOnly set once a result comes in and it was never published for
+// betting.
+
 enum BetOutcome {
   PENDING
   WIN
@@ -86,11 +92,19 @@ model User {
   teamNumber       Int?
   teamRank         Int?
 
-  accounts      Account[]
-  sessions      Session[]
-  matchEntries  MatchPlayer[]
-  bets          Bet[]
-  matchesLogged Match[]       @relation("MatchCreatedBy")
+  // Ratings-engine bookkeeping. doublesRating (above) is now the LIVE,
+  // match-driven number -- it starts at the admin's spreadsheet projection
+  // and moves after every logged match (see lib/ratings.ts). This counter
+  // is how a new or lightly-played player keeps moving faster than someone
+  // with a long track record: see ratingKFactor() in lib/ratings.ts.
+  ratingMatchesPlayed Int @default(0)
+
+  accounts        Account[]
+  sessions        Session[]
+  matchEntries    MatchPlayer[]
+  bets            Bet[]
+  matchesLogged   Match[]                 @relation("MatchCreatedBy")
+  ratingAdjustments MatchRatingAdjustment[]
 }
 
 // join table: which players are on which team for a given match
@@ -123,8 +137,33 @@ model Match {
   sets   Set[]
   margin Float? // final game-differential margin for Team A, after tiebreak rules applied
 
-  players MatchPlayer[]
-  bets    Bet[]
+  // True for a match logged for ratings only -- never went through betting
+  // (no spread, no bets, possibly no scheduledAt beyond "this week"). Lets
+  // the UI and queries tell a rating-only entry apart from a real betting
+  // match without having to infer it from a null line.
+  ratingOnly Boolean @default(false)
+
+  players           MatchPlayer[]
+  bets              Bet[]
+  ratingAdjustments MatchRatingAdjustment[]
+}
+
+// One row per player per rated match, recording the exact rating delta
+// applied. Mirrors how bets are re-settled: to edit or undo a result,
+// reverse every row for that match (subtract delta back off doublesRating,
+// decrement ratingMatchesPlayed, delete the rows) before recomputing --
+// so re-entering a score is always safe no matter how many times it happens.
+model MatchRatingAdjustment {
+  id        String   @id @default(cuid())
+  matchId   String
+  playerId  String
+  delta     Float // signed change applied to this player's doublesRating
+  createdAt DateTime @default(now())
+
+  match  Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  player User  @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([matchId, playerId])
 }
 
 model Set {
