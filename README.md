@@ -135,6 +135,10 @@ Vercel project settings, then deploy. Run `npm run db:push` and
 pointed at the prod database, or via `vercel env pull` + the same
 commands) to set up the schema and your admin account there too.
 
+The build itself no longer runs `prisma db push`, so preview builds from
+any branch can't change the live database. After a schema change, run
+`npm run db:push` against production yourself before deploying.
+
 ## Notes / things you may want to adjust later
 
 - Invite flow is currently: you add a player's name + email under
