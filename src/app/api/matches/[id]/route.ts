@@ -7,7 +7,8 @@ import { isValidLine } from "@/lib/lines";
 // Admin-only: edit a DRAFT match (teams, cutoff time, and/or a saved-but-not-yet-
 // published line). Once a match has been published it is locked -- people may
 // already have bets riding on it -- so this refuses anything but a draft.
-export const PATCH = withAuthError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const PATCH = withAuthError(async (req: NextRequest, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
   const body = await req.json();
 
@@ -65,7 +66,8 @@ export const PATCH = withAuthError(async (req: NextRequest, { params }: { params
 
 // Admin-only: delete a DRAFT match. Published matches can't be deleted this
 // way (use "Cancel & refund", which returns everyone's points first).
-export const DELETE = withAuthError(async (_req: Request, { params }: { params: { id: string } }) => {
+export const DELETE = withAuthError(async (_req: Request, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
 
   const match = await prisma.match.findUnique({ where: { id: params.id }, include: { bets: true } });

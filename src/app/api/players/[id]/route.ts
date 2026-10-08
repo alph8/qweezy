@@ -4,7 +4,8 @@ import { requireAdmin, withAuthError } from "@/lib/session";
 
 // Admin-only: fix a player's name/email — e.g. if the email imported from
 // a spreadsheet isn't the one they actually want to sign in with.
-export const PATCH = withAuthError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const PATCH = withAuthError(async (req: NextRequest, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
   const { name, email } = (await req.json()) as { name?: string; email?: string };
 

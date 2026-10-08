@@ -60,7 +60,7 @@ export const POST = withAuthError(async (req: NextRequest) => {
     const hits = byName.get(norm(resolveRosterName(r.name))) ?? [];
     if (hits.length === 1) {
       matched.push(r.name);
-      const seedDoubles = hits[0].doublesRating === null ? { doublesRating: r.doublesRating } : {};
+      const seedDoubles: Record<string, number | null> = hits[0].doublesRating === null ? { doublesRating: r.doublesRating } : {};
       updates.push({ id: hits[0].id, data: { ...staticFields, ...seedDoubles } });
     } else if (hits.length > 1) {
       ambiguous.push(r.name);

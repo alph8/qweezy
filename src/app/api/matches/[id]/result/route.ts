@@ -14,7 +14,8 @@ import { applyMatchRatings, reverseMatchRatings } from "@/lib/ratings";
 // score is reversed before the new one is applied. So re-submitting a
 // corrected score never double-credits a balance or double-moves a
 // rating, no matter how many times it happens.
-export const POST = withAuthError(async (req: NextRequest, { params }: { params: { id: string } }) => {
+export const POST = withAuthError(async (req: NextRequest, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
   const { sets } = (await req.json()) as { sets: SetInput[] };
 
@@ -73,7 +74,8 @@ export const POST = withAuthError(async (req: NextRequest, { params }: { params:
 // the score is cleared, and the match goes back to LOCKED (or stays
 // PENDING_SPREAD for a ratingOnly match) awaiting a result -- as if it had
 // never been entered. This is the one to use for testing a what-if score.
-export const DELETE = withAuthError(async (_req: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = withAuthError(async (_req: NextRequest, props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   await requireAdmin();
 
   const match = await prisma.match.findUniqueOrThrow({
